@@ -1,73 +1,47 @@
-# React + TypeScript + Vite
+# Binary Flip
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Binary Flip is a React + TypeScript game built with Vite and Bun. Players flip a line of binary dots to match target numbers using powers of two, then review a batch summary at the end.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Start page for configuring the game
+- Lets you set the lower bound, upper bound, number of dots, and number of challenges
+- Validates that the chosen range fits the selected dot count and challenge batch
+- Generates unique challenge numbers that are not powers of 2
+- Play screen shows the current sum, target number, and a live timer
+- End screen shows a summary for each challenge and the total time spent
 
-## React Compiler
+## How to run
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Install dependencies and start the app:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+bun install
+bun run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Build for production:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+bun run build
 ```
+
+Preview the production build:
+
+```bash
+bun run preview
+```
+
+## Project scripts
+
+- `bun run dev` - start the Vite development server
+- `bun run build` - type-check and create a production build
+- `bun run lint` - run ESLint
+- `bun run preview` - preview the production build locally
+
+## Game rules
+
+- The rightmost dot is index 0 and is worth 1
+- Each dot to the left doubles in value: 2, 4, 8, and so on
+- A target is solved when the lit dots sum to the target number
+- Targets are unique within a batch and never equal a power of 2
